@@ -29,6 +29,20 @@ impl Deck {
         Deck { cards }
     }
 
+    pub fn split(mut self) -> (Deck, Deck) {
+        let deck_a_cards = self.cards.split_off(self.cards.len() / 2);
+        let deck_b_cards = self.cards;
+
+        (
+            Deck {
+                cards: deck_a_cards,
+            },
+            Deck {
+                cards: deck_b_cards,
+            },
+        )
+    }
+
     pub fn shuffle(&mut self) {
         self.cards.shuffle(&mut rand::thread_rng());
     }
@@ -69,7 +83,7 @@ impl fmt::Display for Deck {
             write!(f, "{}", s)?;
 
             if cards_iter.peek().is_some() {
-                write!(f, ", ")?;
+                write!(f, ",")?;
             }
         }
 
